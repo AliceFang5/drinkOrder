@@ -24,12 +24,12 @@ class drinkOrderViewController: UIViewController {
     var pickerSelectionUnconfirm = 0
     var isModifyState = false
     var modifyRow = 0
-    var modifyDrinkOrder = DrinkOrder(name: "", drink: "", sugar: "", ice: "", volume: "", bubble: "", price: "", orderid: "")
+    var modifyDrinkOrder = DrinkOrder(name: "", drink: "", sugar: "", ice: "", volume: "", bubble: "", price: 0, orderid: 0)
 
     let sugarGroup = ["無糖", "微糖", "半糖", "正常糖"]
     let iceGroup = ["熱飲", "去冰", "少冰", "正常冰"]
     let volumeGroup = ["中杯", "大杯"]
-    let bubbleGroup = ["", "加白玉珍珠"]
+    let bubbleGroup = ["", "加白玉"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +138,7 @@ class drinkOrderViewController: UIViewController {
         let volume = volumeGroup[volumeSegment.selectedSegmentIndex]
         var bubble = ""
         if bubbleSwitch.isOn{ bubble = bubbleGroup[1] }
-        let price = priceLabel.text!
+        let price = Int(priceLabel.text!)!
         let orderid = getOrderid()
         let drinkOrder = DrinkOrder(name: name, drink: drink, sugar: sugar, ice: ice, volume: volume, bubble: bubble, price: price, orderid: orderid)
         
@@ -159,12 +159,15 @@ class drinkOrderViewController: UIViewController {
         print(#function)
         navigationController?.popViewController(animated: true)
     }
-    func getOrderid()->String{
+    func getOrderid()->Int{
+        if orderList.count == 0{
+            return 0
+        }
         var idConfirm = false
-        var id = "0"
+        var id = 0
         while idConfirm == false {
 //            id = String(Int.random(in: 0...999))//generate random id everytime
-            id = String(Int(id)! + 1)//generate id from 0, add 1 everytime
+            id = id + 1//generate id from 0, add 1 everytime
             for i in 0...(orderList.count-1){
                 if id == orderList[i].orderid{
                     break
@@ -177,7 +180,7 @@ class drinkOrderViewController: UIViewController {
     }
     func getOrderList(){
         print(#function)
-        let urlStr = "https://sheetdb.io/api/v1/j9xfkocdgfgjx"
+        let urlStr = "https://sheetdb.io/api/v1/j9xfkocdgfgjx?cast_numbers=price,orderid"
         if let url = URL(string: urlStr){
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let data = data, let orderList = try? JSONDecoder().decode([DrinkOrder].self, from: data){
@@ -265,7 +268,7 @@ class drinkOrderViewController: UIViewController {
         if bubbleSwitch.isOn{
             price += 10
         }
-        priceLabel.text = "\(price)元"
+        priceLabel.text = price.description
     }
 }
 extension drinkOrderViewController: UIPickerViewDelegate, UIPickerViewDataSource{

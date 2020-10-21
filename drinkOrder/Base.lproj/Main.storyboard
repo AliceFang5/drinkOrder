@@ -61,8 +61,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="60元" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiP-cq-hdv">
-                                <rect key="frame" x="183" y="676" width="161" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="60" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiP-cq-hdv">
+                                <rect key="frame" x="183" y="676" width="47" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -153,6 +153,13 @@
                                     <action selector="submitOrder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZQx-fb-OVI"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SGG-Dm-6ry">
+                                <rect key="frame" x="238" y="676" width="21" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -171,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4394.202898550725" y="61.607142857142854"/>
+            <point key="canvasLocation" x="3596" y="78"/>
         </scene>
         <!--Order List Table View Controller-->
         <scene sceneID="ehf-Od-ZXn">
@@ -227,20 +234,131 @@
                                     <segue destination="rho-jb-FQF" kind="presentation" identifier="modifyOrder" id="mpc-9t-eG1"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderSettlementTotal" rowHeight="80" id="UbU-rl-pNd" customClass="orderSettlementTotalCell" customModule="drinkOrder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="123" width="414" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UbU-rl-pNd" id="ZzM-Jz-Wwg">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfC-Qv-gP5">
+                                            <rect key="frame" x="10" y="24.5" width="61.5" height="31.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                            <color key="textColor" red="0.82443386320000001" green="0.63082593679999999" blue="0.3450260758" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="YfC-Qv-gP5" firstAttribute="centerY" secondItem="ZzM-Jz-Wwg" secondAttribute="centerY" id="9Sy-8U-MrC"/>
+                                        <constraint firstItem="YfC-Qv-gP5" firstAttribute="leading" secondItem="ZzM-Jz-Wwg" secondAttribute="leading" constant="10" id="mgN-j7-9sJ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.02425703593" green="0.3584240675" blue="0.47844845060000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <outlet property="totalCountLabel" destination="YfC-Qv-gP5" id="hhk-7n-hFt"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="zYa-sG-Jed" id="2Gs-G1-dXj"/>
                             <outlet property="delegate" destination="zYa-sG-Jed" id="4ib-VJ-Jg0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="h0G-9N-TwX"/>
+                    <navigationItem key="navigationItem" id="h0G-9N-TwX">
+                        <barButtonItem key="rightBarButtonItem" title="結單" id="rOs-hX-4Cm">
+                            <connections>
+                                <action selector="orderSettlement:" destination="zYa-sG-Jed" id="Qw5-GY-Gtt"/>
+                                <segue destination="VTg-U8-AhJ" kind="show" destinationCreationSelector="orderSettlementSegue:" id="hHi-35-BrL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="p24-ab-JqI">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9E-v9-Yfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1810.144927536232" y="441.96428571428572"/>
+        </scene>
+        <!--Order Settlement Table View Controller-->
+        <scene sceneID="5Hu-JR-siz">
+            <objects>
+                <tableViewController id="VTg-U8-AhJ" customClass="orderSettlementTableViewController" customModule="drinkOrder" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="V8W-vK-O0s">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderSettlement" id="zNs-zb-Iq5" customClass="orderSettlementCell" customModule="drinkOrder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zNs-zb-Iq5" id="sTU-aJ-pnf">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dde-Oc-wD5">
+                                            <rect key="frame" x="20" y="11" width="296" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaC-Fg-lUi">
+                                            <rect key="frame" x="320" y="11" width="74" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="drinkCountLabel" destination="kaC-Fg-lUi" id="Wnj-Ll-WsU"/>
+                                    <outlet property="drinkSettlementLabel" destination="dde-Oc-wD5" id="Lpi-d6-RCy"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderSettlementTotal" rowHeight="80" id="hce-Zw-aJB" customClass="orderSettlementTotalCell" customModule="drinkOrder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="71.5" width="414" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hce-Zw-aJB" id="9JP-sR-kZl">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uoU-nI-r4q">
+                                            <rect key="frame" x="10" y="24.5" width="61.5" height="31.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                            <color key="textColor" red="0.82443386320000001" green="0.63082593679999999" blue="0.3450260758" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="uoU-nI-r4q" firstAttribute="leading" secondItem="9JP-sR-kZl" secondAttribute="leading" constant="10" id="J14-6c-iOM"/>
+                                        <constraint firstItem="uoU-nI-r4q" firstAttribute="centerY" secondItem="9JP-sR-kZl" secondAttribute="centerY" id="L2D-eN-8Ka"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.02425703593" green="0.3584240675" blue="0.47844845060000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <outlet property="totalCountLabel" destination="uoU-nI-r4q" id="rvV-Ta-1KP"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="VTg-U8-AhJ" id="uBX-Sk-8p1"/>
+                            <outlet property="delegate" destination="VTg-U8-AhJ" id="ExR-ts-OgE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="1GW-Vx-rHl">
+                        <barButtonItem key="rightBarButtonItem" image="trash" catalog="system" id="OTx-70-1gA">
+                            <connections>
+                                <action selector="deleteOrderList:" destination="VTg-U8-AhJ" id="dew-MO-4Af"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YVc-xD-3gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2860.8695652173915" y="744.64285714285711"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="s83-cv-qAk">
@@ -320,7 +438,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MaZ-c7-1yJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3484.057971014493" y="61.607142857142854"/>
+            <point key="canvasLocation" x="2861" y="78"/>
         </scene>
         <!--Menu-->
         <scene sceneID="VO8-mo-4Hh">
@@ -351,6 +469,7 @@
         <image name="logo" width="370" height="136"/>
         <image name="menu" width="1002" height="1600"/>
         <image name="rectangle.and.pencil.and.ellipsis" catalog="system" width="128" height="81"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

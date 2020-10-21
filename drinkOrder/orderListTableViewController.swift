@@ -40,12 +40,12 @@ class orderListTableViewController: UITableViewController {
     }
     func getOrderListFake(){
         print(#function)
-        orderList = [drinkOrder.DrinkOrder(name: "alice", drink: "熟成紅茶", sugar: "無糖", ice: "少冰", volume: "中杯", bubble: "加白玉珍珠", price: "35元", orderid: "777"), drinkOrder.DrinkOrder(name: "wesley", drink: "麗春紅茶", sugar: "半糖", ice: "去冰", volume: "大杯", bubble: "", price: "30元", orderid: "888"), drinkOrder.DrinkOrder(name: "emma", drink: "春芽冷露", sugar: "正常糖", ice: "正常冰", volume: "大杯", bubble: "加白玉珍珠", price: "40元", orderid: "999")]
+        orderList = [drinkOrder.DrinkOrder(name: "flora", drink: "熟成冷露", sugar: "微糖", ice: "去冰", volume: "大杯", bubble: "加白玉", price: 40, orderid: 13), drinkOrder.DrinkOrder(name: "qq", drink: "雪藏紅茶", sugar: "微糖", ice: "去冰", volume: "大杯", bubble: "", price: 55, orderid: 10), drinkOrder.DrinkOrder(name: "Alice", drink: "太妃紅茶", sugar: "半糖", ice: "熱飲", volume: "中杯", bubble: "", price: 30, orderid: 2), drinkOrder.DrinkOrder(name: "Wesley", drink: "熟成紅茶", sugar: "半糖", ice: "去冰", volume: "大杯", bubble: "", price: 30, orderid: 12), drinkOrder.DrinkOrder(name: "favorite yet", drink: "冷露歐蕾", sugar: "無糖", ice: "熱飲", volume: "大杯", bubble: "", price: 40, orderid: 6), drinkOrder.DrinkOrder(name: "favorite yet", drink: "春芽綠茶", sugar: "正常糖", ice: "正常冰", volume: "大杯", bubble: "加白玉", price: 30, orderid: 3), drinkOrder.DrinkOrder(name: "favorite yet", drink: "春芽綠茶", sugar: "正常糖", ice: "正常冰", volume: "大杯", bubble: "加白玉", price: 30, orderid: 5), drinkOrder.DrinkOrder(name: "favorite", drink: "春梅冰茶", sugar: "微糖", ice: "熱飲", volume: "大杯", bubble: "", price: 45, orderid: 1), drinkOrder.DrinkOrder(name: "right", drink: "愛司紅茶", sugar: "微糖", ice: "去冰", volume: "大杯", bubble: "", price: 40, orderid: 678), drinkOrder.DrinkOrder(name: "t", drink: "熟成紅茶", sugar: "無糖", ice: "熱飲", volume: "中杯", bubble: "加白玉", price: 35, orderid: 321), drinkOrder.DrinkOrder(name: "Kuma", drink: "白玉歐蕾", sugar: "半糖", ice: "少冰", volume: "中杯", bubble: "加白玉", price: 60, orderid: 8), drinkOrder.DrinkOrder(name: "emma", drink: "玉薑歐蕾", sugar: "無糖", ice: "熱飲", volume: "中杯", bubble: "加白玉", price: 75, orderid: 998), drinkOrder.DrinkOrder(name: "emma", drink: "金薑歐蕾", sugar: "半糖", ice: "熱飲", volume: "中杯", bubble: "", price: 65, orderid: 9), drinkOrder.DrinkOrder(name: "emma", drink: "愛司紅茶", sugar: "微糖", ice: "去冰", volume: "大杯", bubble: "", price: 40, orderid: 593), drinkOrder.DrinkOrder(name: "t", drink: "熟成紅茶", sugar: "微糖", ice: "去冰", volume: "大杯", bubble: "加白玉", price: 40, orderid: 4), drinkOrder.DrinkOrder(name: "rights of", drink: "金薑歐蕾", sugar: "半糖", ice: "熱飲", volume: "中杯", bubble: "", price: 65, orderid: 54), drinkOrder.DrinkOrder(name: "make", drink: "金薑歐蕾", sugar: "正常糖", ice: "熱飲", volume: "中杯", bubble: "", price: 65, orderid: 7)]
 //        print(self.orderList[0].name)
     }
     func getOrderList(){
         print(#function)
-        let urlStr = "https://sheetdb.io/api/v1/j9xfkocdgfgjx"
+        let urlStr = "https://sheetdb.io/api/v1/j9xfkocdgfgjx?cast_numbers=price,orderid"
         if let url = URL(string: urlStr){
             URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let data = data, let orderList = try? JSONDecoder().decode([DrinkOrder].self, from: data){
@@ -83,13 +83,37 @@ class orderListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if navigationItem.searchController?.isActive == true{
+            if searchOrderList.count == 0{
+                return 1
+            }
             return searchOrderList.count
         }else{
+            if orderList.count == 0{
+                return 1
+            }
             return orderList.count
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if navigationItem.searchController?.isActive == true{
+            if searchOrderList.count == 0{
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "orderSettlementTotal", for: indexPath) as? orderSettlementTotalCell else{
+                    return UITableViewCell()
+                }
+                cell.totalCountLabel.text = "無訂單資料"
+                return cell
+            }
+        }else{
+            if orderList.count == 0{
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "orderSettlementTotal", for: indexPath) as? orderSettlementTotalCell else{
+                    return UITableViewCell()
+                }
+                cell.totalCountLabel.text = "無訂單資料"
+                return cell
+            }
+        }
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "orderListCell", for: indexPath) as? orderListCell else{
             return UITableViewCell()
         }
@@ -153,7 +177,12 @@ class orderListTableViewController: UITableViewController {
         let configuration = UISwipeActionsConfiguration(actions: [updateAction, deleteAction])
         return configuration
     }
-
+    
+    @IBSegueAction func orderSettlementSegue(_ coder: NSCoder) -> orderSettlementTableViewController? {
+        let controller = orderSettlementTableViewController(coder: coder)
+        controller?.orderList = orderList
+        return controller
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -199,6 +228,9 @@ extension orderListTableViewController: UISearchResultsUpdating,UISearchBarDeleg
             searchOrderList = orderList.filter({ (drinkOrder) -> Bool in
                 drinkOrder.name.lowercased().contains(searchString.lowercased())
             })
+            if searchString == ""{
+                searchOrderList = orderList
+            }
             tableView.reloadData()
         }
     }

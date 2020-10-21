@@ -28,7 +28,7 @@ class orderListCell: UITableViewCell {
     func update(){
         nameLabel.text = drinkOrder?.name
         drinkLabel.text = drinkOrder?.drink
-        priceLabel.text = drinkOrder?.price
+        priceLabel.text = "\(drinkOrder!.price)元"
         drinkDetailLabel.text = String("\(drinkOrder!.sugar) \(drinkOrder!.ice) \(drinkOrder!.volume) \(drinkOrder!.bubble)")
 //        print(#function)
     }

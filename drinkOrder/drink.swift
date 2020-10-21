@@ -11,14 +11,14 @@ struct DrinkOrderData:Encodable {
     var data:DrinkOrder
 }
 struct DrinkOrder:Codable {
-    let name:String
+    var name:String
     let drink:String
     let sugar:String
     let ice:String
     let volume:String
     let bubble:String
-    let price:String
-    let orderid:String
+    let price:Int
+    let orderid:Int
 }
 struct DrinkMenu:Decodable {
     var name:String
@@ -26,4 +26,8 @@ struct DrinkMenu:Decodable {
     var priceL:Int
     var onlyHot:Bool
 }
-
+struct DrinkSettlement {
+    let drinkDetail:String
+    var count:Int
+    let price:Int
+}
